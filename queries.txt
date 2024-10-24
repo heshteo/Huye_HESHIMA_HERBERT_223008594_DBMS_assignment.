@@ -1,0 +1,25 @@
+------------------------------------TABLE CREATION------------------------------------
+
+CREATE TABLE `study`.`ngoma` (`id` INT(255) NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(255) NOT NULL , `last_name` VARCHAR(255) NOT NULL , `province` VARCHAR(255) NOT NULL , `district` VARCHAR(255) NOT NULL , `sector` VARCHAR(255) NOT NULL , `cell` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `phone_number` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`)); 
+
+
+------------------------------------INSERTION-------------------------------------------
+
+INSERT INTO `ngoma` (`id`, `first_name`, `last_name`, `province`, `district`, `sector`, `cell`, `email`, `phone_number`) VALUES (NULL, 'ntwari', 'brian', 'east', 'rwamagana', 'kigabiro', 'cyanya', 'ntwaribrian@gmail.com', '+25087878787878787'), (NULL, 'niyogisubizo', 'benoit', 'east', 'kayonza', 'cyibitoke', 'kanzenze', 'niyobe@gmail.com', '+25079009090909099'), (NULL, 'habumugisha', 'pesfik', 'west', 'ngororero', 'mudende', 'kabatwa', 'pesfik@gmail.com', '+@50739117083'), (NULL, 'iradukunda', 'diyodoni', 'kigali', 'rwanda', 'cyibitoki', 'nduba', 'diyodoni@gmail.com', '+25079086121221'), (NULL, 'sepe', 'bahati', 'east', 'nyagatare', 'matimba', 'nterero', 'bahatipro7@gmail.com', '+25079088283823'), (NULL, 'kamurase', 'vensa', 'east', 'nyagatare', 'matimba', 'cyarwa', 'vensa@gmail.com', '+250790887722'), (NULL, 'munezero', 'garace', 'east', 'kirehe', 'nyamugali', 'bukora', 'mungarace@gmail.com', '+250788858684'), (NULL, 'gatesi', 'lea', 'north', 'musanze', 'rukara', 'kahi', 'leagatesi@gmail.com', '+25079909090990'), (NULL, 'cyezamutima', 'emeraude', 'kigali', 'nyarugenge', 'nyamirambo', 'biryogo', 'cyemer@gmail.com', '+2507799897988'), (NULL, 'karugaba', 'eddy', 'east', 'gatsibo', 'muhura', 'karuhanga', 'eddy@gmail.com', '+2507800799807')
+
+
+----------------------------------ADDING THE GENDER COLUMN-------------------------------------
+
+
+
+alter table ngoma add column gender varchar(80) after last_name;
+
+
+
+--------------------------------INSERTING INTO THE GENDER COLUMN---------------------------------
+
+
+update ngoma set gender= 'male ' where id%2 = 0;
+
+update ngoma set gender= 'female ' where id%2 != 0;
+ 
