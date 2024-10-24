@@ -1,25 +1,591 @@
-------------------------------------TABLE CREATION------------------------------------
 
-CREATE TABLE `study`.`ngoma` (`id` INT(255) NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(255) NOT NULL , `last_name` VARCHAR(255) NOT NULL , `province` VARCHAR(255) NOT NULL , `district` VARCHAR(255) NOT NULL , `sector` VARCHAR(255) NOT NULL , `cell` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `phone_number` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`)); 
+Setting environment for using XAMPP for Windows.
+T Y C O O N@CRYPTK c:\xampp
+# mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 256
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
 
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
-------------------------------------INSERTION-------------------------------------------
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-INSERT INTO `ngoma` (`id`, `first_name`, `last_name`, `province`, `district`, `sector`, `cell`, `email`, `phone_number`) VALUES (NULL, 'ntwari', 'brian', 'east', 'rwamagana', 'kigabiro', 'cyanya', 'ntwaribrian@gmail.com', '+25087878787878787'), (NULL, 'niyogisubizo', 'benoit', 'east', 'kayonza', 'cyibitoke', 'kanzenze', 'niyobe@gmail.com', '+25079009090909099'), (NULL, 'habumugisha', 'pesfik', 'west', 'ngororero', 'mudende', 'kabatwa', 'pesfik@gmail.com', '+@50739117083'), (NULL, 'iradukunda', 'diyodoni', 'kigali', 'rwanda', 'cyibitoki', 'nduba', 'diyodoni@gmail.com', '+25079086121221'), (NULL, 'sepe', 'bahati', 'east', 'nyagatare', 'matimba', 'nterero', 'bahatipro7@gmail.com', '+25079088283823'), (NULL, 'kamurase', 'vensa', 'east', 'nyagatare', 'matimba', 'cyarwa', 'vensa@gmail.com', '+250790887722'), (NULL, 'munezero', 'garace', 'east', 'kirehe', 'nyamugali', 'bukora', 'mungarace@gmail.com', '+250788858684'), (NULL, 'gatesi', 'lea', 'north', 'musanze', 'rukara', 'kahi', 'leagatesi@gmail.com', '+25079909090990'), (NULL, 'cyezamutima', 'emeraude', 'kigali', 'nyarugenge', 'nyamirambo', 'biryogo', 'cyemer@gmail.com', '+2507799897988'), (NULL, 'karugaba', 'eddy', 'east', 'gatsibo', 'muhura', 'karuhanga', 'eddy@gmail.com', '+2507800799807')
+MariaDB [(none)]> create database study
+    -> ;
+Query OK, 1 row affected (0.002 sec)
 
+MariaDB [(none)]> use study;
+Database changed
+MariaDB [study]> create table students;
+ERROR 1113 (42000): A table must have at least 1 column
+MariaDB [study]> create table students id varchar(255) PRIMARY KEY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id varchar(255) PRIMARY KEY' at line 1
+MariaDB [study]> create table students(id varchar(255) PRIMARY KEY);
+Query OK, 0 rows affected (0.024 sec)
 
-----------------------------------ADDING THE GENDER COLUMN-------------------------------------
+MariaDB [study]> alter table students add column name varchar (255);;
+Query OK, 0 rows affected (0.851 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
+ERROR: No query specified
 
+MariaDB [study]> desc students
+    -> ;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | varchar(255) | NO   | PRI | NULL    |       |
+| name  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.002 sec)
 
-alter table ngoma add column gender varchar(80) after last_name;
+MariaDB [study]> alter table students add column gender varchar(40) NOT NULL;
+Query OK, 0 rows affected (0.025 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
+MariaDB [study]> desc students;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| id     | varchar(255) | NO   | PRI | NULL    |       |
+| name   | varchar(255) | YES  |     | NULL    |       |
+| gender | varchar(40)  | NO   |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+3 rows in set (0.023 sec)
 
+MariaDB [study]> alter table students add column marks(255) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(255) not null' at line 1
+MariaDB [study]> alter table students add column marks varchar(255) not null;
+Query OK, 0 rows affected (0.009 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
---------------------------------INSERTING INTO THE GENDER COLUMN---------------------------------
+MariaDB [study]> desc students;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| id     | varchar(255) | NO   | PRI | NULL    |       |
+| name   | varchar(255) | YES  |     | NULL    |       |
+| gender | varchar(40)  | NO   |     | NULL    |       |
+| marks  | varchar(255) | NO   |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.002 sec)
 
+MariaDB [study]> alter table students CHANGE column name F_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [study]> alter table students change column name F_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [study]> alter table students change column name,F_name varchar(255) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'F_name varchar(255) not null' at line 1
+MariaDB [study]> alter table students change column name F_name varchar(255) not null;
+Query OK, 0 rows affected (0.055 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
-update ngoma set gender= 'male ' where id%2 = 0;
+MariaDB [study]> alter table students add column L_name varchar(255) not null;
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
-update ngoma set gender= 'female ' where id%2 != 0;
- 
+MariaDB [study]> alter table students change column marks marks int(25) not null;
+Query OK, 0 rows affected (0.040 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table students add column nationality varchar(255) not null;
+Query OK, 0 rows affected (0.008 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table students add column reg_No varchar(255) not null;
+Query OK, 0 rows affected (0.005 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> desc students
+    -> ;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | varchar(255) | NO   | PRI | NULL    |       |
+| F_name      | varchar(255) | NO   |     | NULL    |       |
+| gender      | varchar(40)  | NO   |     | NULL    |       |
+| marks       | int(25)      | NO   |     | NULL    |       |
+| L_name      | varchar(255) | NO   |     | NULL    |       |
+| nationality | varchar(255) | NO   |     | NULL    |       |
+| reg_No      | varchar(255) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+7 rows in set (0.003 sec)
+
+MariaDB [study]> alter table students add column course varchar(255)
+    -> ;
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table students add column DOB date()char(;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '()char(' at line 1
+MariaDB [study]> alter table students add column DOB date()char;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '()char' at line 1
+MariaDB [study]> alter table students add column DOB date();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '()' at line 1
+MariaDB [study]> alter table students add column DOB date;
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> desc students
+    -> ;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | varchar(255) | NO   | PRI | NULL    |       |
+| F_name      | varchar(255) | NO   |     | NULL    |       |
+| gender      | varchar(40)  | NO   |     | NULL    |       |
+| marks       | int(25)      | NO   |     | NULL    |       |
+| L_name      | varchar(255) | NO   |     | NULL    |       |
+| nationality | varchar(255) | NO   |     | NULL    |       |
+| reg_No      | varchar(255) | NO   |     | NULL    |       |
+| course      | varchar(255) | YES  |     | NULL    |       |
+| DOB         | date         | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+9 rows in set (0.003 sec)
+
+MariaDB [study]> insert into students values('BBIT001','UWIMPAYE','Nadine','BBIT','1990-02-02','F','Rwandan');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [study]> alter table students remove column reg_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column reg_no' at line 1
+MariaDB [study]> alter table students drop column reg_no;
+Query OK, 0 rows affected (0.010 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table students rename columns id reg_No
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'id reg_No' at line 1
+MariaDB [study]> alter table students rename column id reg_No;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'column id reg_No' at line 1
+MariaDB [study]> alter table students change column id reg_No varchar(255) PRIMARY KEY;
+ERROR 1068 (42000): Multiple primary key defined
+MariaDB [study]> alter table students drop primary key reg_No
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'reg_No' at line 1
+MariaDB [study]> alter table students drop column reg_No;
+ERROR 1091 (42000): Can't DROP COLUMN `reg_No`; check that it exists
+MariaDB [study]> desc students
+    -> ;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | varchar(255) | NO   | PRI | NULL    |       |
+| F_name      | varchar(255) | NO   |     | NULL    |       |
+| gender      | varchar(40)  | NO   |     | NULL    |       |
+| marks       | int(25)      | NO   |     | NULL    |       |
+| L_name      | varchar(255) | NO   |     | NULL    |       |
+| nationality | varchar(255) | NO   |     | NULL    |       |
+| course      | varchar(255) | YES  |     | NULL    |       |
+| DOB         | date         | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.003 sec)
+
+MariaDB [study]> alter table students drop column id;
+Query OK, 0 rows affected (0.036 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table students add column reg_No varchar(255) PRIMARY KEY;
+Query OK, 0 rows affected (0.027 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> insert into students values('BBIT001','UWIMPAYE','Nadine','BBIT','1990-02-02','F','Rwandan');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [study]> desc students
+    -> ;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| F_name      | varchar(255) | NO   |     | NULL    |       |
+| gender      | varchar(40)  | NO   |     | NULL    |       |
+| marks       | int(25)      | NO   |     | NULL    |       |
+| L_name      | varchar(255) | NO   |     | NULL    |       |
+| nationality | varchar(255) | NO   |     | NULL    |       |
+| course      | varchar(255) | YES  |     | NULL    |       |
+| DOB         | date         | YES  |     | NULL    |       |
+| reg_No      | varchar(255) | NO   | PRI | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.002 sec)
+
+MariaDB [study]> alter table students drop column marks
+    -> ;
+Query OK, 0 rows affected (0.008 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> insert into students values('BBIT001','UWIMPAYE','Nadine','BBIT','1990-02-02','F','Rwandan');
+Query OK, 1 row affected, 1 warning (0.005 sec)
+
+MariaDB [study]> insert into students values('BIT003','NDAYISHIMIYE','David','BIT','1995-05-09','M','Rwandan'),('BCS002','NTIVUGURUZWA','JEAN','BCS','1994-05-10','M','Rwandan');
+ERROR 1062 (23000): Duplicate entry 'Rwandan' for key 'PRIMARY'
+MariaDB [study]> insert into students values('BBIT001','UWIMPAYE','Nadine','BBIT','1990-02-02','F','Rwandan');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [study]> insert into students values('BIT003','NDAYISHIMIYE','David','BIT','1995-05-09','M','Rwandan'),('BCS002','NTIVUGURUZWA','JEAN','BCS','1994-05-10','M','Rwandan');
+Query OK, 2 rows affected (0.001 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table students add column marks varchar(255) not null
+    -> ;
+Query OK, 0 rows affected (0.009 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> desc students
+    -> ;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| reg_No      | varchar(255) | NO   | PRI | NULL    |       |
+| F_name      | varchar(255) | NO   |     | NULL    |       |
+| L_name      | varchar(255) | NO   |     | NULL    |       |
+| course      | varchar(255) | YES  |     | NULL    |       |
+| DOB         | date         | YES  |     | NULL    |       |
+| gender      | varchar(40)  | NO   |     | NULL    |       |
+| nationality | varchar(255) | NO   |     | NULL    |       |
+| marks       | varchar(255) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.004 sec)
+
+MariaDB [study]> select * from students
+    -> ;
++---------+--------------+--------+--------+------------+--------+-------------+-------+
+| reg_No  | F_name       | L_name | course | DOB        | gender | nationality | marks |
++---------+--------------+--------+--------+------------+--------+-------------+-------+
+| BBIT001 | UWIMPAYE     | Nadine | BBIT   | 1990-02-02 | F      | Rwandan     |       |
+| BCS002  | NTIVUGURUZWA | JEAN   | BCS    | 1994-05-10 | M      | Rwandan     |       |
+| BIT003  | NDAYISHIMIYE | David  | BIT    | 1995-05-09 | M      | Rwandan     |       |
++---------+--------------+--------+--------+------------+--------+-------------+-------+
+3 rows in set (0.000 sec)
+
+MariaDB [study]> desc students;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| reg_No      | varchar(255) | NO   | PRI | NULL    |       |
+| F_name      | varchar(255) | NO   |     | NULL    |       |
+| L_name      | varchar(255) | NO   |     | NULL    |       |
+| course      | varchar(255) | YES  |     | NULL    |       |
+| DOB         | date         | YES  |     | NULL    |       |
+| gender      | varchar(40)  | NO   |     | NULL    |       |
+| nationality | varchar(255) | NO   |     | NULL    |       |
+| marks       | varchar(255) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.003 sec)
+
+MariaDB [study]> update students set marks = 50;
+Query OK, 3 rows affected (0.003 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+MariaDB [study]> alter table students change column marks marks float not null;
+Query OK, 3 rows affected (0.052 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> select * from students
+    -> ;
++---------+--------------+--------+--------+------------+--------+-------------+-------+
+| reg_No  | F_name       | L_name | course | DOB        | gender | nationality | marks |
++---------+--------------+--------+--------+------------+--------+-------------+-------+
+| BBIT001 | UWIMPAYE     | Nadine | BBIT   | 1990-02-02 | F      | Rwandan     |    50 |
+| BCS002  | NTIVUGURUZWA | JEAN   | BCS    | 1994-05-10 | M      | Rwandan     |    50 |
+| BIT003  | NDAYISHIMIYE | David  | BIT    | 1995-05-09 | M      | Rwandan     |    50 |
++---------+--------------+--------+--------+------------+--------+-------------+-------+
+3 rows in set (0.001 sec)
+
+MariaDB [study]> create table test (ID varchar(255) primary key, GENDER varchar(255) NOT NULL,STATUS varchar(255) NOT NULL, SCHOOL varchar(255) NOT NULL, DEPARTMENT varchar(255) NOT NULL, FACULTY varchar(255) NOT NULL)
+    -> ;
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [study]> show tables
+    -> ;
++-----------------+
+| Tables_in_study |
++-----------------+
+| students        |
+| test            |
++-----------------+
+2 rows in set (0.001 sec)
+
+MariaDB [study]> desc test
+    -> ;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| ID         | varchar(255) | NO   | PRI | NULL    |       |
+| GENDER     | varchar(255) | NO   |     | NULL    |       |
+| STATUS     | varchar(255) | NO   |     | NULL    |       |
+| SCHOOL     | varchar(255) | NO   |     | NULL    |       |
+| DEPARTMENT | varchar(255) | NO   |     | NULL    |       |
+| FACULTY    | varchar(255) | NO   |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+6 rows in set (0.004 sec)
+
+MariaDB [study]> alter table test add column marks float not null before id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'before id' at line 1
+MariaDB [study]> alter table test alter column id int (11);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'int (11)' at line 1
+MariaDB [study]> alter table test add column marks float not null;
+Query OK, 0 rows affected (0.007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table test add column marks float not null after id;
+ERROR 1060 (42S21): Duplicate column name 'marks'
+MariaDB [study]> alter table drop marks
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'drop marks' at line 1
+MariaDB [study]> alter table test drop marks;
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> alter table test add column marks float not null after id;
+Query OK, 0 rows affected (0.007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> desc test;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| ID         | varchar(255) | NO   | PRI | NULL    |       |
+| marks      | float        | NO   |     | NULL    |       |
+| GENDER     | varchar(255) | NO   |     | NULL    |       |
+| STATUS     | varchar(255) | NO   |     | NULL    |       |
+| SCHOOL     | varchar(255) | NO   |     | NULL    |       |
+| DEPARTMENT | varchar(255) | NO   |     | NULL    |       |
+| FACULTY    | varchar(255) | NO   |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+7 rows in set (0.003 sec)
+
+MariaDB [study]> alter table test change column marks marks  flot not null after gender
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'not null after gender' at line 1
+MariaDB [study]> alter table test change column marks marks  float not null after gender;
+Query OK, 0 rows affected (0.005 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> desc test;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| ID         | varchar(255) | NO   | PRI | NULL    |       |
+| GENDER     | varchar(255) | NO   |     | NULL    |       |
+| marks      | float        | NO   |     | NULL    |       |
+| STATUS     | varchar(255) | NO   |     | NULL    |       |
+| SCHOOL     | varchar(255) | NO   |     | NULL    |       |
+| DEPARTMENT | varchar(255) | NO   |     | NULL    |       |
+| FACULTY    | varchar(255) | NO   |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+7 rows in set (0.003 sec)
+
+MariaDB [study]> alter table test change column marks MARKS  flost not null after gender;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'not null after gender' at line 1
+MariaDB [study]> alter table test change column marks MARKS  float not null after gender;
+Query OK, 0 rows affected (0.004 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> insert into test('1','FEMALE','34','SINGLE','UDK','COMPUTER','computing');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''1','FEMALE','34','SINGLE','UDK','COMPUTER','computing')' at line 1
+MariaDB [study]> insert into test values('1','FEMALE','34','SINGLE','UDK','COMPUTER','computing');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [study]> select * from test;
++----+--------+-------+--------+--------+------------+-----------+
+| ID | GENDER | MARKS | STATUS | SCHOOL | DEPARTMENT | FACULTY   |
++----+--------+-------+--------+--------+------------+-----------+
+| 1  | FEMALE |    34 | SINGLE | UDK    | COMPUTER   | computing |
++----+--------+-------+--------+--------+------------+-----------+
+1 row in set (0.000 sec)
+
+MariaDB [study]> alter table test drop column status;
+Query OK, 0 rows affected (0.007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> select * from test;\
++----+--------+-------+--------+------------+-----------+
+| ID | GENDER | MARKS | SCHOOL | DEPARTMENT | FACULTY   |
++----+--------+-------+--------+------------+-----------+
+| 1  | FEMALE |    34 | UDK    | COMPUTER   | computing |
++----+--------+-------+--------+------------+-----------+
+1 row in set (0.000 sec)
+
+MariaDB [study]> select department, id, marks from test;
++------------+----+-------+
+| department | id | marks |
++------------+----+-------+
+| COMPUTER   | 1  |    34 |
++------------+----+-------+
+1 row in set (0.000 sec)
+
+MariaDB [study]> insert into test values('3','FEMALE','66','AUCA','SOFTWARE','IT'),('5','FEMALE','76','UNILAK','SOFTWARE','IT');
+Query OK, 2 rows affected (0.003 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> select * from test there gender="female" or school="unilak";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'gender="female" or school="unilak"' at line 1
+MariaDB [study]> select * from test where gender="female" or school="unilak";
++----+--------+-------+--------+------------+-----------+
+| ID | GENDER | MARKS | SCHOOL | DEPARTMENT | FACULTY   |
++----+--------+-------+--------+------------+-----------+
+| 1  | FEMALE |    34 | UDK    | COMPUTER   | computing |
+| 3  | FEMALE |    66 | AUCA   | SOFTWARE   | IT        |
+| 5  | FEMALE |    76 | UNILAK | SOFTWARE   | IT        |
++----+--------+-------+--------+------------+-----------+
+3 rows in set (0.000 sec)
+
+MariaDB [study]> CREATE TABLE `study`.`ngoma` (`id` INT(255) NOT NULL AUTO_INCREMENT , `first_name` VARCHAR(255) NOT NULL , `last_name` VARCHAR(255) NOT NULL , `province` VARCHAR(255) NOT NULL , `district` VARCHAR(255) NOT NULL , `sector` VARCHAR(255) NOT NULL , `cell` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `phone_number` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`));
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [study]> desk ngoma
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'desk ngoma' at line 1
+MariaDB [study]> desc ngoma;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int(255)     | NO   | PRI | NULL    | auto_increment |
+| first_name   | varchar(255) | NO   |     | NULL    |                |
+| last_name    | varchar(255) | NO   |     | NULL    |                |
+| province     | varchar(255) | NO   |     | NULL    |                |
+| district     | varchar(255) | NO   |     | NULL    |                |
+| sector       | varchar(255) | NO   |     | NULL    |                |
+| cell         | varchar(255) | NO   |     | NULL    |                |
+| email        | varchar(255) | NO   |     | NULL    |                |
+| phone_number | varchar(255) | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.003 sec)
+
+MariaDB [study]> INSERT INTO `ngoma` (`id`, `first_name`, `last_name`, `province`, `district`, `sector`, `cell`, `email`, `phone_number`) VALUES (NULL, 'ntwari', 'brian', 'east', 'rwamagana', 'kigabiro', 'cyanya', 'ntwaribrian@gmail.com', '+25087878787878787'), (NULL, 'niyogisubizo', 'benoit', 'east', 'kayonza', 'cyibitoke', 'kanzenze', 'niyobe@gmail.com', '+25079009090909099'), (NULL, 'habumugisha', 'pesfik', 'west', 'ngororero', 'mudende', 'kabatwa', 'pesfik@gmail.com', '+@50739117083'), (NULL, 'iradukunda', 'diyodoni', 'kigali', 'rwanda', 'cyibitoki', 'nduba', 'diyodoni@gmail.com', '+25079086121221'), (NULL, 'sepe', 'bahati', 'east', 'nyagatare', 'matimba', 'nterero', 'bahatipro7@gmail.com', '+25079088283823'), (NULL, 'kamurase', 'vensa', 'east', 'nyagatare', 'matimba', 'cyarwa', 'vensa@gmail.com', '+250790887722'), (NULL, 'munezero', 'garace', 'east', 'kirehe', 'nyamugali', 'bukora', 'mungarace@gmail.com', '+250788858684'), (NULL, 'gatesi', 'lea', 'north', 'musanze', 'rukara', 'kahi', 'leagatesi@gmail.com', '+25079909090990'), (NULL, 'cyezamutima', 'emeraude', 'kigali', 'nyarugenge', 'nyamirambo', 'biryogo', 'cyemer@gmail.com', '+2507799897988'), (NULL, 'karugaba', 'eddy', 'east', 'gatsibo', 'muhura', 'karuhanga', 'eddy@gmail.com', '+2507800799807')
+    -> ;
+Query OK, 10 rows affected (0.003 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> select * from ngoma;
++----+--------------+-----------+----------+------------+------------+-----------+-----------------------+--------------------+
+| id | first_name   | last_name | province | district   | sector     | cell      | email                 | phone_number       |
++----+--------------+-----------+----------+------------+------------+-----------+-----------------------+--------------------+
+|  1 | heshima      | herbert   | west     | rubavu     | gisenyi    | umuganda  | hesh.teo@gmail.com    | +250890861884      |
+|  2 | niyonkuru    | elyse     | kigali   | kicukiro   | gatenga    | nyanza    | niyoelyse@gmail.com   | +2507837650514     |
+|  3 | ntwari       | brian     | east     | rwamagana  | kigabiro   | cyanya    | ntwaribrian@gmail.com | +25087878787878787 |
+|  4 | niyogisubizo | benoit    | east     | kayonza    | cyibitoke  | kanzenze  | niyobe@gmail.com      | +25079009090909099 |
+|  5 | habumugisha  | pesfik    | west     | ngororero  | mudende    | kabatwa   | pesfik@gmail.com      | +@50739117083      |
+|  6 | iradukunda   | diyodoni  | kigali   | rwanda     | cyibitoki  | nduba     | diyodoni@gmail.com    | +25079086121221    |
+|  7 | sepe         | bahati    | east     | nyagatare  | matimba    | nterero   | bahatipro7@gmail.com  | +25079088283823    |
+|  8 | kamurase     | vensa     | east     | nyagatare  | matimba    | cyarwa    | vensa@gmail.com       | +250790887722      |
+|  9 | munezero     | garace    | east     | kirehe     | nyamugali  | bukora    | mungarace@gmail.com   | +250788858684      |
+| 10 | gatesi       | lea       | north    | musanze    | rukara     | kahi      | leagatesi@gmail.com   | +25079909090990    |
+| 11 | cyezamutima  | emeraude  | kigali   | nyarugenge | nyamirambo | biryogo   | cyemer@gmail.com      | +2507799897988     |
+| 12 | karugaba     | eddy      | east     | gatsibo    | muhura     | karuhanga | eddy@gmail.com        | +2507800799807     |
++----+--------------+-----------+----------+------------+------------+-----------+-----------------------+--------------------+
+12 rows in set (0.000 sec)
+
+MariaDB [study]> alter table ngoma add column gender varchar(80) after last_name;
+Query OK, 0 rows affected (0.009 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [study]> select * from ngoma;
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+| id | first_name   | last_name | gender | province | district   | sector     | cell      | email                 | phone_number       |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+|  1 | heshima      | herbert   | NULL   | west     | rubavu     | gisenyi    | umuganda  | hesh.teo@gmail.com    | +250890861884      |
+|  2 | niyonkuru    | elyse     | NULL   | kigali   | kicukiro   | gatenga    | nyanza    | niyoelyse@gmail.com   | +2507837650514     |
+|  3 | ntwari       | brian     | NULL   | east     | rwamagana  | kigabiro   | cyanya    | ntwaribrian@gmail.com | +25087878787878787 |
+|  4 | niyogisubizo | benoit    | NULL   | east     | kayonza    | cyibitoke  | kanzenze  | niyobe@gmail.com      | +25079009090909099 |
+|  5 | habumugisha  | pesfik    | NULL   | west     | ngororero  | mudende    | kabatwa   | pesfik@gmail.com      | +@50739117083      |
+|  6 | iradukunda   | diyodoni  | NULL   | kigali   | rwanda     | cyibitoki  | nduba     | diyodoni@gmail.com    | +25079086121221    |
+|  7 | sepe         | bahati    | NULL   | east     | nyagatare  | matimba    | nterero   | bahatipro7@gmail.com  | +25079088283823    |
+|  8 | kamurase     | vensa     | NULL   | east     | nyagatare  | matimba    | cyarwa    | vensa@gmail.com       | +250790887722      |
+|  9 | munezero     | garace    | NULL   | east     | kirehe     | nyamugali  | bukora    | mungarace@gmail.com   | +250788858684      |
+| 10 | gatesi       | lea       | NULL   | north    | musanze    | rukara     | kahi      | leagatesi@gmail.com   | +25079909090990    |
+| 11 | cyezamutima  | emeraude  | NULL   | kigali   | nyarugenge | nyamirambo | biryogo   | cyemer@gmail.com      | +2507799897988     |
+| 12 | karugaba     | eddy      | NULL   | east     | gatsibo    | muhura     | karuhanga | eddy@gmail.com        | +2507800799807     |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+12 rows in set (0.000 sec)
+
+MariaDB [study]> update ngoma set gender= 'male ' where id%2= 0;
+Query OK, 6 rows affected (0.006 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+MariaDB [study]> select * from ngoma;
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+| id | first_name   | last_name | gender | province | district   | sector     | cell      | email                 | phone_number       |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+|  1 | heshima      | herbert   | NULL   | west     | rubavu     | gisenyi    | umuganda  | hesh.teo@gmail.com    | +250890861884      |
+|  2 | niyonkuru    | elyse     | male   | kigali   | kicukiro   | gatenga    | nyanza    | niyoelyse@gmail.com   | +2507837650514     |
+|  3 | ntwari       | brian     | NULL   | east     | rwamagana  | kigabiro   | cyanya    | ntwaribrian@gmail.com | +25087878787878787 |
+|  4 | niyogisubizo | benoit    | male   | east     | kayonza    | cyibitoke  | kanzenze  | niyobe@gmail.com      | +25079009090909099 |
+|  5 | habumugisha  | pesfik    | NULL   | west     | ngororero  | mudende    | kabatwa   | pesfik@gmail.com      | +@50739117083      |
+|  6 | iradukunda   | diyodoni  | male   | kigali   | rwanda     | cyibitoki  | nduba     | diyodoni@gmail.com    | +25079086121221    |
+|  7 | sepe         | bahati    | NULL   | east     | nyagatare  | matimba    | nterero   | bahatipro7@gmail.com  | +25079088283823    |
+|  8 | kamurase     | vensa     | male   | east     | nyagatare  | matimba    | cyarwa    | vensa@gmail.com       | +250790887722      |
+|  9 | munezero     | garace    | NULL   | east     | kirehe     | nyamugali  | bukora    | mungarace@gmail.com   | +250788858684      |
+| 10 | gatesi       | lea       | male   | north    | musanze    | rukara     | kahi      | leagatesi@gmail.com   | +25079909090990    |
+| 11 | cyezamutima  | emeraude  | NULL   | kigali   | nyarugenge | nyamirambo | biryogo   | cyemer@gmail.com      | +2507799897988     |
+| 12 | karugaba     | eddy      | male   | east     | gatsibo    | muhura     | karuhanga | eddy@gmail.com        | +2507800799807     |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+12 rows in set (0.000 sec)
+
+MariaDB [study]> update ngoma set gender= 'male ' where id%2 != 0;
+Query OK, 6 rows affected (0.003 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+MariaDB [study]> select * from ngoma;
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+| id | first_name   | last_name | gender | province | district   | sector     | cell      | email                 | phone_number       |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+|  1 | heshima      | herbert   | male   | west     | rubavu     | gisenyi    | umuganda  | hesh.teo@gmail.com    | +250890861884      |
+|  2 | niyonkuru    | elyse     | male   | kigali   | kicukiro   | gatenga    | nyanza    | niyoelyse@gmail.com   | +2507837650514     |
+|  3 | ntwari       | brian     | male   | east     | rwamagana  | kigabiro   | cyanya    | ntwaribrian@gmail.com | +25087878787878787 |
+|  4 | niyogisubizo | benoit    | male   | east     | kayonza    | cyibitoke  | kanzenze  | niyobe@gmail.com      | +25079009090909099 |
+|  5 | habumugisha  | pesfik    | male   | west     | ngororero  | mudende    | kabatwa   | pesfik@gmail.com      | +@50739117083      |
+|  6 | iradukunda   | diyodoni  | male   | kigali   | rwanda     | cyibitoki  | nduba     | diyodoni@gmail.com    | +25079086121221    |
+|  7 | sepe         | bahati    | male   | east     | nyagatare  | matimba    | nterero   | bahatipro7@gmail.com  | +25079088283823    |
+|  8 | kamurase     | vensa     | male   | east     | nyagatare  | matimba    | cyarwa    | vensa@gmail.com       | +250790887722      |
+|  9 | munezero     | garace    | male   | east     | kirehe     | nyamugali  | bukora    | mungarace@gmail.com   | +250788858684      |
+| 10 | gatesi       | lea       | male   | north    | musanze    | rukara     | kahi      | leagatesi@gmail.com   | +25079909090990    |
+| 11 | cyezamutima  | emeraude  | male   | kigali   | nyarugenge | nyamirambo | biryogo   | cyemer@gmail.com      | +2507799897988     |
+| 12 | karugaba     | eddy      | male   | east     | gatsibo    | muhura     | karuhanga | eddy@gmail.com        | +2507800799807     |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+12 rows in set (0.000 sec)
+
+MariaDB [study]> update ngoma set gender= 'male ' where id%2 = 0;
+Query OK, 0 rows affected (0.000 sec)
+Rows matched: 6  Changed: 0  Warnings: 0
+
+MariaDB [study]> select * from ngoma;
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+| id | first_name   | last_name | gender | province | district   | sector     | cell      | email                 | phone_number       |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+|  1 | heshima      | herbert   | male   | west     | rubavu     | gisenyi    | umuganda  | hesh.teo@gmail.com    | +250890861884      |
+|  2 | niyonkuru    | elyse     | male   | kigali   | kicukiro   | gatenga    | nyanza    | niyoelyse@gmail.com   | +2507837650514     |
+|  3 | ntwari       | brian     | male   | east     | rwamagana  | kigabiro   | cyanya    | ntwaribrian@gmail.com | +25087878787878787 |
+|  4 | niyogisubizo | benoit    | male   | east     | kayonza    | cyibitoke  | kanzenze  | niyobe@gmail.com      | +25079009090909099 |
+|  5 | habumugisha  | pesfik    | male   | west     | ngororero  | mudende    | kabatwa   | pesfik@gmail.com      | +@50739117083      |
+|  6 | iradukunda   | diyodoni  | male   | kigali   | rwanda     | cyibitoki  | nduba     | diyodoni@gmail.com    | +25079086121221    |
+|  7 | sepe         | bahati    | male   | east     | nyagatare  | matimba    | nterero   | bahatipro7@gmail.com  | +25079088283823    |
+|  8 | kamurase     | vensa     | male   | east     | nyagatare  | matimba    | cyarwa    | vensa@gmail.com       | +250790887722      |
+|  9 | munezero     | garace    | male   | east     | kirehe     | nyamugali  | bukora    | mungarace@gmail.com   | +250788858684      |
+| 10 | gatesi       | lea       | male   | north    | musanze    | rukara     | kahi      | leagatesi@gmail.com   | +25079909090990    |
+| 11 | cyezamutima  | emeraude  | male   | kigali   | nyarugenge | nyamirambo | biryogo   | cyemer@gmail.com      | +2507799897988     |
+| 12 | karugaba     | eddy      | male   | east     | gatsibo    | muhura     | karuhanga | eddy@gmail.com        | +2507800799807     |
++----+--------------+-----------+--------+----------+------------+------------+-----------+-----------------------+--------------------+
+12 rows in set (0.000 sec)
+
+MariaDB [study]> update ngoma set gender= 'female ' where id%2 != 0;
+Query OK, 6 rows affected (0.003 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+MariaDB [study]> select * from ngoma;
++----+--------------+-----------+---------+----------+------------+------------+-----------+-----------------------+--------------------+
+| id | first_name   | last_name | gender  | province | district   | sector     | cell      | email                 | phone_number       |
++----+--------------+-----------+---------+----------+------------+------------+-----------+-----------------------+--------------------+
+|  1 | heshima      | herbert   | female  | west     | rubavu     | gisenyi    | umuganda  | hesh.teo@gmail.com    | +250890861884      |
+|  2 | niyonkuru    | elyse     | male    | kigali   | kicukiro   | gatenga    | nyanza    | niyoelyse@gmail.com   | +2507837650514     |
+|  3 | ntwari       | brian     | female  | east     | rwamagana  | kigabiro   | cyanya    | ntwaribrian@gmail.com | +25087878787878787 |
+|  4 | niyogisubizo | benoit    | male    | east     | kayonza    | cyibitoke  | kanzenze  | niyobe@gmail.com      | +25079009090909099 |
+|  5 | habumugisha  | pesfik    | female  | west     | ngororero  | mudende    | kabatwa   | pesfik@gmail.com      | +@50739117083      |
+|  6 | iradukunda   | diyodoni  | male    | kigali   | rwanda     | cyibitoki  | nduba     | diyodoni@gmail.com    | +25079086121221    |
+|  7 | sepe         | bahati    | female  | east     | nyagatare  | matimba    | nterero   | bahatipro7@gmail.com  | +25079088283823    |
+|  8 | kamurase     | vensa     | male    | east     | nyagatare  | matimba    | cyarwa    | vensa@gmail.com       | +250790887722      |
+|  9 | munezero     | garace    | female  | east     | kirehe     | nyamugali  | bukora    | mungarace@gmail.com   | +250788858684      |
+| 10 | gatesi       | lea       | male    | north    | musanze    | rukara     | kahi      | leagatesi@gmail.com   | +25079909090990    |
+| 11 | cyezamutima  | emeraude  | female  | kigali   | nyarugenge | nyamirambo | biryogo   | cyemer@gmail.com      | +2507799897988     |
+| 12 | karugaba     | eddy      | male    | east     | gatsibo    | muhura     | karuhanga | eddy@gmail.com        | +2507800799807     |
++----+--------------+-----------+---------+----------+------------+------------+-----------+-----------------------+--------------------+
+12 rows in set (0.000 sec)
+
+MariaDB [study]> alter table ngoma add column gender varchar(80) after last_name;
